@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { Body } from "./components/Body"
+import GlobalStyle from "./styles/globalStyles"
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <div className="App">
-     oi
-    </div>
+      <>
+      <GlobalStyle />
+      
+      <Body></Body>
+      </>
+      
   )
 }
 
