@@ -1,5 +1,5 @@
 import { BoxInput, Home, Title } from "../styles/style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../styles/Button.style";
 import { Input, InputCheck, Li, Ul } from "../styles/Ul.styles";
 import { DeleteIcon } from "../styles/Imgs.styles";
@@ -14,17 +14,27 @@ export function Body(){
 
     const [item, setItem] = useState<string>()
     const [itens, setItens] = useState<ListaItens[]>([])
-
     const [checked, setChecked] = useState(false);
 
+    const [idAtual, setidAtual] = useState<number>()
+    const [maiorId, setMaiorId] = useState<number>(0)
+
     const addItem = () =>{
+        
+        if(itens.length +1 >= maiorId){
+            setMaiorId(itens.length +1) 
+        }
+        else{
+            setMaiorId(maiorId + 1)
+        }
+
         if (!item) return
         setItens((oldLista) =>[
             ...oldLista,
             {
-                id: itens.length+1,
+                id: maiorId,
                 conteudo: item,
-                check: true
+                check: checked
             }
         ])
     }
@@ -50,15 +60,30 @@ export function Body(){
         </BoxInput>
             <Ul>
                 {itens.map((e) =>{
+
                     return(
                         
                         <Li boxChecked={e.check} key={e.id}>
+                            
                             <InputCheck type="checkbox" onChange={() =>{
-                                setChecked(!checked)
-                                e.check = !checked
-                                console.log(e)
+                                {setidAtual(e.id)}
+                                if(idAtual === e.id || idAtual === undefined){
+                                    e.check= !checked
+                                    setChecked(!checked)
+                                    
+                                }
+                                else{
+                                    e.check= !e.check
+                                    setChecked(e.check)
+                                }
+
                             }} />
-                            <DeleteIcon src="https://cdn-icons-png.flaticon.com/512/7263/7263521.png" />
+                            <DeleteIcon src="https://cdn-icons-png.flaticon.com/512/7263/7263521.png" 
+                            
+                                onClick={() =>{
+                                    
+                                }}
+                            />
 
 
                             {e.conteudo}
