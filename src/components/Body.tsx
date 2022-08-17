@@ -1,5 +1,8 @@
-import { BoxInput, Button, Home, Input, Li, Title, Ul } from "../styles/style";
+import { BoxInput, Home, Title } from "../styles/style";
 import { useState } from "react";
+import { Button } from "../styles/Button.style";
+import { Input, InputCheck, Li, Ul } from "../styles/Ul.styles";
+import { DeleteIcon } from "../styles/Imgs.styles";
 
 export function Body(){
 
@@ -10,6 +13,8 @@ export function Body(){
 
     const [item, setItem] = useState<string>()
     const [itens, setItens] = useState<ListaItens[]>([])
+
+    const [checked, setChecked] = useState(false);
 
     const addItem = () =>{
         if (!item) return
@@ -44,7 +49,18 @@ export function Body(){
             <Ul>
                 {itens.map((e) =>{
                     return(
-                        <Li key={e.id}>{e.conteudo}</Li>
+                        
+                        <Li boxChecked={checked} key={e.id}>
+                            <InputCheck type="checkbox" onChange={() =>{
+                                setChecked(!checked)
+                            }} />
+                            <DeleteIcon src="https://cdn-icons-png.flaticon.com/512/7263/7263521.png" />
+
+
+                            {e.conteudo}
+                            
+                            
+                        </Li>
                     )
                 })}
             </Ul>
