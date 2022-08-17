@@ -15,18 +15,13 @@ export function Body(){
     const [item, setItem] = useState<string>()
     const [itens, setItens] = useState<ListaItens[]>([])
     const [checked, setChecked] = useState(false);
-
     const [idAtual, setidAtual] = useState<number>()
-    const [maiorId, setMaiorId] = useState<number>(0)
+    const [maiorId, setMaiorId] = useState<number>(1)
 
     const addItem = () =>{
         
-        if(itens.length +1 >= maiorId){
-            setMaiorId(itens.length +1) 
-        }
-        else{
-            setMaiorId(maiorId + 1)
-        }
+        setMaiorId(maiorId + 1)
+        console.log(maiorId)
 
         if (!item) return
         setItens((oldLista) =>[
@@ -81,7 +76,7 @@ export function Body(){
                             <DeleteIcon src="https://cdn-icons-png.flaticon.com/512/7263/7263521.png" 
                             
                                 onClick={() =>{
-                                    
+                                    itens.splice(e.id)
                                 }}
                             />
 
