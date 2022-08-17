@@ -9,6 +9,7 @@ export function Body(){
     type ListaItens = {
             id:number;
             conteudo:string;
+            check:boolean;
     }
 
     const [item, setItem] = useState<string>()
@@ -22,7 +23,8 @@ export function Body(){
             ...oldLista,
             {
                 id: itens.length+1,
-                conteudo: item
+                conteudo: item,
+                check: true
             }
         ])
     }
@@ -50,9 +52,11 @@ export function Body(){
                 {itens.map((e) =>{
                     return(
                         
-                        <Li boxChecked={checked} key={e.id}>
+                        <Li boxChecked={e.check} key={e.id}>
                             <InputCheck type="checkbox" onChange={() =>{
                                 setChecked(!checked)
+                                e.check = !checked
+                                console.log(e)
                             }} />
                             <DeleteIcon src="https://cdn-icons-png.flaticon.com/512/7263/7263521.png" />
 
