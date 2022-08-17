@@ -16,12 +16,12 @@ export function Body(){
     const [itens, setItens] = useState<ListaItens[]>([])
     const [checked, setChecked] = useState(false);
     const [idAtual, setidAtual] = useState<number>()
+
     const [maiorId, setMaiorId] = useState<number>(1)
 
     const addItem = () =>{
         
         setMaiorId(maiorId + 1)
-        console.log(maiorId)
 
         if (!item) return
         setItens((oldLista) =>[
@@ -76,7 +76,9 @@ export function Body(){
                             <DeleteIcon src="https://cdn-icons-png.flaticon.com/512/7263/7263521.png" 
                             
                                 onClick={() =>{
-                                    itens.splice(e.id)
+                                    const index = itens.indexOf(e)
+
+                                    itens.splice(index, 1)
                                 }}
                             />
 
