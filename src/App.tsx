@@ -7,7 +7,7 @@ function App() {
       <>
       <GlobalStyle />
       
-      <Body></Body>
+      <Body />
       </>
       
   )
