@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../styles/Button.style";
 import { Input, InputCheck, Li, Ul } from "../styles/Ul.styles";
 import { DeleteIcon } from "../styles/Imgs.styles";
+import { render } from "react-dom";
 
 export function Body(){
 
@@ -16,7 +17,6 @@ export function Body(){
     const [itens, setItens] = useState<ListaItens[]>([])
     const [checked, setChecked] = useState(false);
     const [idAtual, setidAtual] = useState<number>()
-
     const [maiorId, setMaiorId] = useState<number>(1)
 
     const addItem = () =>{
@@ -29,10 +29,16 @@ export function Body(){
             {
                 id: maiorId,
                 conteudo: item,
-                check: checked
+                check: false
             }
         ])
     }
+
+    const removeItem = (e:ListaItens) =>{
+        const index = itens.indexOf(e)
+        itens.splice(index, 1)
+        setItens([...itens])
+    } 
 
     return(
     <Home>
@@ -40,15 +46,16 @@ export function Body(){
         <BoxInput name="form" onSubmit={(e) =>{
             e.preventDefault()
         }}>
-            <Input onChange={(e) =>{
+            <Input maxLength={35} onChange={(e) =>{
                 setItem(e.target.value)
-                }} 
+                }}
                 type="text" 
-                placeholder="Informe o item a ser adicionado" 
+                placeholder="Informe o item a ser adicionado"
             />
 
-            <Button onClick={() =>{
+            <Button onClick={(e) =>{
                 addItem()
+                setItem("")
             }}>Inserir</Button>
             
             
@@ -72,13 +79,11 @@ export function Body(){
                                     setChecked(e.check)
                                 }
 
-                            }} />
+                            }}/>
                             <DeleteIcon src="https://cdn-icons-png.flaticon.com/512/7263/7263521.png" 
                             
                                 onClick={() =>{
-                                    const index = itens.indexOf(e)
-
-                                    itens.splice(index, 1)
+                                    removeItem(e)
                                 }}
                             />
 
