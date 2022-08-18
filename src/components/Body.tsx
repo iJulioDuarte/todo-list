@@ -1,8 +1,8 @@
 import { BoxInput, Home, Title } from "../styles/style";
-import { useEffect, useState } from "react";
+import { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { Button } from "../styles/Button.style";
 import { Input, InputCheck, Li, Ul } from "../styles/Ul.styles";
-import { DeleteIcon } from "../styles/Imgs.styles";
+import { DeleteIcon, EditIcon } from "../styles/Icons.styles";
 import { render } from "react-dom";
 
 export function Body(){
@@ -13,11 +13,36 @@ export function Body(){
             check:boolean;
     }
 
+    const inputRef = useRef<HTMLInputElement>(null)
+
     const [item, setItem] = useState<string>()
     const [itens, setItens] = useState<ListaItens[]>([])
+
+
     const [checked, setChecked] = useState(false);
-    const [idAtual, setidAtual] = useState<number>()
+    const [idCheckAtual, setidCheckAtual] = useState<number>()
     const [maiorId, setMaiorId] = useState<number>(1)
+
+ 
+    const getEditText = () =>{
+        const textoNovo = prompt("Qual será a nova mensgaem?")
+        return textoNovo
+    }
+
+    const editItem = async(e:ListaItens) =>{
+        inputRef.current?.focus()
+    
+
+        const index = itens.indexOf(e)
+        const arrayItensCopy = Array.from(itens)
+        const idCopy = arrayItensCopy[index].id
+        
+        const texto = getEditText()
+
+        texto && arrayItensCopy.splice(index, 1, {id: idCopy, conteudo: texto, check: false })
+        setItens(arrayItensCopy)
+        console.log(arrayItensCopy)
+    }
 
     const addItem = () =>{
         
@@ -32,6 +57,7 @@ export function Body(){
                 check: false
             }
         ])
+    
     }
 
     const removeItem = (e:ListaItens) =>{
@@ -39,6 +65,7 @@ export function Body(){
         itens.splice(index, 1)
         setItens([...itens])
     } 
+    
 
     return(
     <Home>
@@ -46,11 +73,12 @@ export function Body(){
         <BoxInput name="form" onSubmit={(e) =>{
             e.preventDefault()
         }}>
-            <Input maxLength={35} onChange={(e) =>{
+            <Input ref={inputRef} id="inputText" maxLength={40} onChange={(e) =>{
                 setItem(e.target.value)
                 }}
                 type="text" 
                 placeholder="Informe o item a ser adicionado"
+                defaultValue={item}
             />
 
             <Button onClick={(e) =>{
@@ -64,12 +92,11 @@ export function Body(){
                 {itens.map((e) =>{
 
                     return(
-                        
                         <Li boxChecked={e.check} key={e.id}>
                             
                             <InputCheck type="checkbox" onChange={() =>{
-                                {setidAtual(e.id)}
-                                if(idAtual === e.id || idAtual === undefined){
+                                {setidCheckAtual(e.id)}
+                                if(idCheckAtual === e.id || idCheckAtual === undefined){
                                     e.check= !checked
                                     setChecked(!checked)
                                     
@@ -86,12 +113,14 @@ export function Body(){
                                     removeItem(e)
                                 }}
                             />
-
+                            <EditIcon src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" 
+                            onClick={() =>{editItem(e)}}/> 
 
                             {e.conteudo}
                             
-                            
+                           
                         </Li>
+
                     )
                 })}
             </Ul>
