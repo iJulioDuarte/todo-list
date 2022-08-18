@@ -1,21 +1,15 @@
 import { BoxInput, Home, Title } from "../styles/style";
-import { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../styles/Button.style";
 import { Input, InputCheck, Li, Ul } from "../styles/Ul.styles";
 import { DeleteIcon, EditIcon } from "../styles/Icons.styles";
-import { render } from "react-dom";
+import { ListaItens } from "./types";
 
 export function Body(){
 
-    type ListaItens = {
-            id:number;
-            conteudo:string;
-            check:boolean;
-    }
-
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const [item, setItem] = useState<string>()
+    const [item, setItem] = useState<string>("")
     const [itens, setItens] = useState<ListaItens[]>([])
 
 
@@ -23,25 +17,29 @@ export function Body(){
     const [idCheckAtual, setidCheckAtual] = useState<number>()
     const [maiorId, setMaiorId] = useState<number>(1)
 
+    useEffect(() =>{
+        inputRef.current?.focus()
+        setItem("")
+    }, [itens])
+
+
  
     const getEditText = () =>{
-        const textoNovo = prompt("Qual será a nova mensgaem?")
+        const textoNovo = prompt("Qual será a nova mensagem?")
         return textoNovo
     }
 
-    const editItem = async(e:ListaItens) =>{
-        inputRef.current?.focus()
+    const editItem = (e:ListaItens) =>{
+        
     
 
         const index = itens.indexOf(e)
         const arrayItensCopy = Array.from(itens)
-        const idCopy = arrayItensCopy[index].id
         
         const texto = getEditText()
 
-        texto && arrayItensCopy.splice(index, 1, {id: idCopy, conteudo: texto, check: false })
+        texto && arrayItensCopy.splice(index, 1, {id: e.id, conteudo: texto, check: e.check })
         setItens(arrayItensCopy)
-        console.log(arrayItensCopy)
     }
 
     const addItem = () =>{
@@ -78,12 +76,11 @@ export function Body(){
                 }}
                 type="text" 
                 placeholder="Informe o item a ser adicionado"
-                defaultValue={item}
+                value={item}
             />
 
             <Button onClick={(e) =>{
                 addItem()
-                setItem("")
             }}>Inserir</Button>
             
             
