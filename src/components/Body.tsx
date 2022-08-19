@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "../styles/Button.style";
 import { Input, InputCheck, Li, Ul } from "../styles/Ul.styles";
 import { DeleteIcon, EditIcon } from "../styles/Icons.styles";
-import { ListaItens } from "./types";
+import { Id, ListaItens } from "./types";
 
 export function Body(){
 
@@ -15,7 +15,7 @@ export function Body(){
 
     const [checked, setChecked] = useState(false);
     const [idCheckAtual, setidCheckAtual] = useState<number>()
-    const [maiorId, setMaiorId] = useState<number>(1)
+    const maiorId = useRef<number>(1)
 
 
     useEffect(() =>{
@@ -62,11 +62,11 @@ export function Body(){
 
     const addItem = async() =>{
         
-        setMaiorId(maiorId + 1)
+        maiorId.current += 1
 
         if (!item) return
         let meuArray:ListaItens[] = [...itens]
-        meuArray.push({id: maiorId, conteudo: item, check: false})
+        meuArray.push({id: maiorId.current, conteudo: item, check: false})
 
         setItens(meuArray)
         
