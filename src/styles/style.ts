@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 
 export const Title = styled.h1`
     margin-top: 2rem;
@@ -22,4 +22,8 @@ export const BoxInput = styled.form`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: 768px){
+        width:80%
+    }
 `

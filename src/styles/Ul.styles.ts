@@ -1,5 +1,8 @@
 import styled from "styled-components"
 
+type LiType = {
+    boxChecked:boolean
+}
 
 export const Ul = styled.ul`
     list-style: none;
@@ -10,13 +13,11 @@ export const Ul = styled.ul`
     justify-content: space-between;
     flex-wrap: wrap;
     padding: 1rem;
+
+    @media (max-width: 768px){
+        justify-content:center;
+    }
 `
-
-
-type LiType = {
-    boxChecked:boolean
-}
-
 
 export const Li = styled.li<LiType>`
     width: 47%;
@@ -33,6 +34,11 @@ export const Li = styled.li<LiType>`
     color: #000;
 
     text-decoration: ${props => props.boxChecked ? "line-through" : "none"};
+
+    @media (max-width: 768px){
+        width: 90%;
+        font-size:11px;
+    }
 `
 
 export const Input = styled.input`
@@ -47,7 +53,7 @@ export const Input = styled.input`
     font-size: 17px;
 `
 
-export const InputCheck = styled.input`
+export const InputCheck = styled.input<LiType>`
     margin-right:0.5rem;
-    
+    display: ${props => props.boxChecked ? "none" : "inherit"}
 `
