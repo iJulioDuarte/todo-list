@@ -21,11 +21,9 @@ export function Body(){
     useEffect(() =>{
          
         const textStorage = localStorage.getItem("ListaItens")
-        console.log(textStorage)
 
         if (textStorage){
         const objectStorage:ListaItens[] = JSON.parse(textStorage)
-        console.log(objectStorage)
         setItens([...objectStorage])
 
 }
@@ -72,7 +70,7 @@ export function Body(){
         let meuArray:ListaItens[] = [...itens, {id: maiorId.current, conteudo: item, check: false}]
 
         setItens(meuArray)
-        
+
         maiorId.current += 1
 
         localStorage.setItem("ListaItens", JSON.stringify(meuArray)) 
