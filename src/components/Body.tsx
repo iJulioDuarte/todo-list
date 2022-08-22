@@ -41,19 +41,18 @@ export function Body(){
 
 
 
-    const getEditText = () =>{
-        const textoNovo = prompt("Qual será a nova mensagem?")
-        return textoNovo
-    }
-
     const editItem = (e:ListaItens) =>{
 
-        const index = itens.indexOf(e)
-        const arrayItensCopy = Array.from(itens)
-        
-        const texto = getEditText()
+        const texto = prompt("Qual será a nova mensagem?")
 
-        texto && arrayItensCopy.splice(index, 1, {id: e.id, conteudo: texto, check: e.check })
+        const arrayItensCopy = itens.map(x => {
+            if(x.id === e.id && texto){
+                return {id: e.id, conteudo: texto, check: checked}
+            }
+            return x
+        }    
+        )
+        
         setItens(arrayItensCopy)
 
         localStorage.setItem("ListaItens", JSON.stringify(arrayItensCopy)) 
@@ -62,23 +61,30 @@ export function Body(){
 
     const addItem = async() =>{
         
-        maiorId.current += 1
+        
+        itens.forEach((e) =>{
+            if (e.id >= maiorId.current){
+                maiorId.current = e.id + 1
+            }
+        }) 
 
         if (!item) return
-        let meuArray:ListaItens[] = [...itens]
-        meuArray.push({id: maiorId.current, conteudo: item, check: false})
+        let meuArray:ListaItens[] = [...itens, {id: maiorId.current, conteudo: item, check: false}]
 
         setItens(meuArray)
         
+        maiorId.current += 1
+
         localStorage.setItem("ListaItens", JSON.stringify(meuArray)) 
     }
 
     const removeItem = (e:ListaItens) =>{
-        const index = itens.indexOf(e)
-        itens.splice(index, 1)
-        setItens([...itens])
+
+        const copyArray = itens.filter(x => x.id !== e.id)
+
+        setItens(copyArray)
         
-        localStorage.setItem("ListaItens", JSON.stringify(itens))
+        localStorage.setItem("ListaItens", JSON.stringify(copyArray))
     } 
     
     return(

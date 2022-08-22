@@ -7,14 +7,16 @@ export const Button = styled.button`
     margin-bottom:1rem;
     color: #555;
     box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
-    &:hover{
+    
+    cursor: pointer;
+
+    :hover{
         background-color:#87FFA2;
-        cursor: pointer;
         box-shadow: 1px 1px 1px 1px rgba(0,0,0,0.1);
     };
-    &:active{
+    :active{
         background-color:#54E68A;
-        cursor: pointer;
+        
     }
 
 `
