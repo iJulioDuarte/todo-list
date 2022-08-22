@@ -35,9 +35,6 @@ export function Body(){
         setItem("")
 
     }, [itens])
- 
-
-
 
     const editItem = (e:ListaItens) =>{
 
@@ -45,7 +42,7 @@ export function Body(){
 
         const arrayItensCopy = itens.map(x => {
             if(x.id === e.id && texto){
-                return {id: e.id, conteudo: texto, check: checked}
+                return {id: e.id, conteudo: texto, check: e.check}
             }
             return x
         }    
@@ -56,7 +53,7 @@ export function Body(){
         localStorage.setItem("ListaItens", JSON.stringify(arrayItensCopy)) 
 
     }
-
+    
     const addItem = async() =>{
         
         
