@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "../styles/Button.style";
 import { Input, InputCheck, Li, Ul } from "../styles/Ul.styles";
 import { DeleteIcon, EditIcon } from "../styles/Icons.styles";
-import { Id, ListaItens } from "./types";
+import { ListaItens } from "./types";
 
 export function Body(){
 
@@ -28,6 +28,7 @@ export function Body(){
 
 }
     }, [])
+
 
 
     useEffect(() =>{
@@ -97,7 +98,7 @@ export function Body(){
                 value={item}
             />
 
-            <Button onClick={(e) =>{
+            <Button onClick={() =>{
                 addItem()
             }}>Inserir</Button>
             

@@ -3,7 +3,3 @@ export type ListaItens = {
     conteudo:string;
     check:boolean;
 }
-
-export type Id ={
-    number:number
-}
